@@ -98,13 +98,13 @@ public class Minesweeper
 	{
 		return selectedMine(dummyBoard,choice)||filledBoard(myBoard,dummyBoard);
 	}//end of function
-	public String[][] completeBoard(String myBoard[][])
+	public String[][] completeBoard(String myBoard[][],String dummyBoard[][])
 	{
 		for(int i=0;i<myBoard.length;i++)
 		{
 			for(int j=0;j<myBoard[i].length;j++)
 			{
-				if(myBoard[i][j].equals("*"))
+				if(dummyBoard[i][j].equals("X"))
 				{
 					myBoard[i][j]="X";
 				}
@@ -332,19 +332,19 @@ public class Minesweeper
 			if(!selectedMine(dummyBoard,choice))
 			{
 				myBoard[choice.getChoiceX()][choice.getChoiceY()]=Integer.toString(numBombsAround(dummyBoard,choice));
+				printBoard(myBoard);
 			}
 			else
 			{
 				myBoard[choice.getChoiceX()][choice.getChoiceY()]="X";
 				System.out.println("You lose!");
 			}
-			printBoard(myBoard);
 		}while(!gameOver(myBoard,dummyBoard,choice));
+		myBoard=completeBoard(myBoard,dummyBoard);
+		System.out.println("The completed board is as follows: ");
+		printBoard(myBoard);
 		if(!selectedMine(dummyBoard,choice))
 		{
-			myBoard=completeBoard(myBoard);
-			System.out.println("The completed board is as follows: ");
-			printBoard(myBoard);
 			System.out.println("You win!");
 		}
 	}//end of function
@@ -361,8 +361,7 @@ public class Minesweeper
 		myBoard=mine.createBoard();
 		dummyBoard=mine.createDummyBoard();
 		mine.printBoard(myBoard);
-		mine.printBoard(dummyBoard);
-		System.out.println();
+		//mine.printBoard(dummyBoard);--->Only used for testing purposes
 		mine.playGame(myBoard,dummyBoard);
 	}//end of function
 }
